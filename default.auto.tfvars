@@ -6,46 +6,45 @@ application = "mock"
 cost_center = "cc101"
 # VPC
 cidr = "10.0.0.0/16"
-azs  = ["us-east-1a", "us-east-1b", "us-east-1c"]
 name = "my-vpc"
 public_subnets = [
   {
-    "name" : "",
+    "name" : "public-subnet-1",
     "cidr" : "10.0.1.0/24",
-    "az" : "",
-    "tags" : []
+    "az" : "us-east-1a",
+    "tags" : {}
   },
   {
-    "name" : "",
+    "name" : "public-subnet-2",
     "cidr" : "10.0.2.0/24",
-    "az" : "",
-    "tags" : []
+    "az" : "us-east-1b",
+    "tags" : {}
   },
   {
-    "name" : "",
+    "name" : "public-subnet-3",
     "cidr" : "10.0.3.0/24",
-    "az" : "",
-    "tags" : []
+    "az" : "us-east-1c",
+    "tags" : {}
   }
 ]
 private_subnets = [
   {
-    "name" : "",
+    "name" : "private-subnet-1",
     "cidr" : "10.0.101.0/24",
-    "az" : "",
-    "tags" : []
+    "az" : "us-east-1a",
+    "tags" : {}
   },
   {
-    "name" : "",
+    "name" : "private-subnet-2",
     "cidr" : "10.0.102.0/24",
-    "az" : "",
-    "tags" : []
+    "az" : "us-east-1b",
+    "tags" : {}
   },
   {
-    "name" : "",
+    "name" : "private-subnet-3",
     "cidr" : "10.0.103.0/24",
-    "az" : "",
-    "tags" : []
+    "az" : "us-east-1c",
+    "tags" : {}
   }
 ]
 public_subnet_tags = {
@@ -58,3 +57,27 @@ private_subnet_tags = {
 }
 single_nat_gateway = true
 # EKS
+worker_nodes = [
+  {
+    "node_group_name" : "spot",
+    "capacity_type" : "SPOT",
+    "instance_types" : ["t3.medium"],
+    "labels" : {
+      type_of_nodegroup = "spot_untainted"
+    },
+    "min_size": 1, 
+    "desired_size": 1, 
+    "max_size": 1
+  },
+  {
+    "node_group_name" : "ondemand",
+    "capacity_type" : "ON_DEMAND",
+    "instance_types" : ["t3.medium"],
+    "labels" : {
+      type_of_nodegroup = "on_demand_untainted"
+    },
+    "min_size": 1, 
+    "desired_size": 1, 
+    "max_size": 1
+  }
+]

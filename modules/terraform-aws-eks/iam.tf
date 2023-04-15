@@ -28,7 +28,6 @@ resource "aws_iam_role_policy_attachment" "eks_cluster_attach_policy_to_role" {
 }
 
 # Node Groups
-
 resource "aws_iam_role" "eks_cluster_worker" {
   name               = "eks_cluster_worker"
   assume_role_policy = <<EOF

@@ -3,7 +3,7 @@ resource "aws_eks_cluster" "main" {
   role_arn = aws_iam_role.eks_cluster.arn
 
   vpc_config {
-    subnet_ids = [var.public_subnet_ids, var.private_subnet_ids]
+    subnet_ids = concat(var.public_subnet_ids, var.private_subnet_ids)
   }
   depends_on = [
     aws_iam_role_policy_attachment.eks_cluster_attach_policy_to_role,
@@ -17,6 +17,7 @@ resource "aws_eks_node_group" "on_demand" {
   node_role_arn   = aws_iam_role.eks_cluster_worker.arn
   instance_types = var.on_demand_instance_types
   subnet_ids = var.private_subnet_ids
+  capacity_type   = "SPOT"
 
   labels = {
     type_of_nodegroup = "on_demand_untainted"

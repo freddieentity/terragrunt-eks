@@ -11,16 +11,17 @@ resource "aws_vpc" "main" {
 
 ### -- Public Subnet --
 resource "aws_subnet" "public" {
-  count                   = length(var.public_subnets)
-  cidr_block              = var.public_subnets[count.index]
-  availability_zone       = var.azs[count.index]
+  for_each  = { for index, value in var.public_subnets: value.name => value }
+  cidr_block              = each.value.cidr
+  availability_zone       = each.value.az
   vpc_id                  = aws_vpc.main.id
   map_public_ip_on_launch = true
 
   tags = merge({
-    Name = "${var.name}-public-${count.index + 1}"
+    Name = "${each.value.name}"
   },
-  var.public_subnet_tags
+  var.public_subnet_tags,
+  each.value.tags
   )
 }
 
@@ -33,25 +34,26 @@ resource "aws_internet_gateway" "main" {
 }
 
 resource "aws_eip" "nat_gateway" {
-    count = var.single_nat_gateway ? 1 : length(var.public_subnets)
+    for_each  = var.single_nat_gateway ? { for index, value in [var.public_subnets[0]]: value.name => value } : { for index, value in var.public_subnets: value.name => value }
     vpc = true
     depends_on = [aws_vpc.main]
 
     tags = {
-        Name = "${var.name}-main"
+        Name = "${each.value.name}"
     }
 }
 
 resource "aws_nat_gateway" "primary" {
-    count = var.single_nat_gateway ? 1 : length(var.public_subnets)
-    subnet_id = element(aws_subnet.public.*.id, count.index)
-    allocation_id = element(aws_eip.nat_gateway.*.id, count.index)  
+    for_each  = var.single_nat_gateway ? { for index, value in [var.public_subnets[0]]: value.name => value } : { for index, value in var.public_subnets: value.name => value }
+    subnet_id = aws_subnet.public[each.value.name].id
+    allocation_id = aws_eip.nat_gateway[each.value.name].id
     tags = {
-        Name = "${var.name}-primary-${count.index + 1}"
+        Name = "${each.value.name}"
     }
 }
 
 resource "aws_route_table" "public_subnet" {
+    for_each  = { for index, value in var.public_subnets: value.name => value }
     vpc_id = aws_vpc.main.id
 
     route {
@@ -60,46 +62,47 @@ resource "aws_route_table" "public_subnet" {
     }
 
     tags = {
-        Name = "${var.name}-public-subnet"
+        Name = "${each.value.name}"
     }
 }
 
 resource "aws_route_table_association" "public_subnet" {
-  count = length(var.public_subnets)
-  subnet_id = element(aws_subnet.public.*.id, count.index)
-  route_table_id = aws_route_table.public_subnet.id
+  for_each  = { for index, value in var.public_subnets: value.name => value }
+  subnet_id = aws_subnet.public[each.value.name].id
+  route_table_id = aws_route_table.public_subnet[each.value.name].id
 }
 
 ### -- Private Subnet --
 resource "aws_subnet" "private" {
-  count             = length(var.private_subnets)
-  cidr_block        = var.private_subnets[count.index]
-  availability_zone = var.azs[count.index]
+  for_each  = { for index, value in var.private_subnets: value.name => value }
+  cidr_block        = each.value.cidr
+  availability_zone = each.value.az
   vpc_id            = aws_vpc.main.id
 
   tags = merge({
-    Name = "${var.name}-private-${count.index + 1}"
+    Name = "${each.value.name}"
   },
-  var.private_subnet_tags
+  var.private_subnet_tags,
+  each.value.tags
   )
 }
 
 resource "aws_route_table" "private_subnet" {
-    count = length(var.private_subnets) # Each NAT Gateway will have a corresponding route table in private subnets
+    for_each  = { for index, value in var.private_subnets: value.name => value }
     vpc_id = aws_vpc.main.id
 
     route {
         cidr_block = "0.0.0.0/0"
-        nat_gateway_id = element(aws_nat_gateway.primary.*.id, count.index)
+        nat_gateway_id = aws_nat_gateway.primary[var.public_subnets[0].name].id # Cant not refer to public subnets -> hard code 0 to access first subnet value
     }
 
     tags = {
-        Name = "${var.name}-private-subnet-${count.index}"
+        Name = "${each.value.name}"
     }
 }
 
 resource "aws_route_table_association" "private_subnet" {
-  count = length(var.azs)
-  subnet_id = element(aws_subnet.private.*.id, count.index)
-  route_table_id = element(aws_route_table.private_subnet.*.id, count.index)
+  for_each  = { for index, value in var.private_subnets: value.name => value }
+  subnet_id = aws_subnet.private[each.value.name].id
+  route_table_id = aws_route_table.private_subnet[each.value.name].id
 }

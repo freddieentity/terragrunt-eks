@@ -9,32 +9,42 @@ stages:
 init:
   stage: init
   script: |
+    terraform -version
     terraform init
 
 validate:
   stage: validate
   script: |
+    terraform fmt -check
     terraform validate
 
 checkov:
   stage: scan
   script: |
-    echo "checkov"
+    echo "Scanning checkov ..."
+    checkov -d .
 
 infracost:
   stage: scan
+  variables:
+    INFRACOST_API_KEY: xxxxxx
   script: |
-    echo "infracost"
+    echo "Scanning infracost ..."
+    # infracost diff --path . --compare-to infracost-base.json
+    # infracost breakdown --path . --format json --out-file infracost-base.json
+    # infracost upload --path infracost-base.json
 
 tflint:
   stage: scan
   script: |
-    echo "tflint"
+    echo "Scanning tflint ..."
+    tflint
 
 tfsec:
   stage: scan
   script: |
-    echo "tfsec"
+    echo "Scanning tfsec ..."
+    tfsec
 
 terraform-plan:
   stage: plan
