@@ -48,3 +48,11 @@ variable "single_nat_gateway" {
   description = "Enable a single NAT Gateway for private subnets"
   type        = bool
 }
+# EKS
+variable "cluster_name" {
+  description = "EKS cluster name"
+}
+variable "node_groups" {
+  default = []
+  description = "List of worker node groups"
+}

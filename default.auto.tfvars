@@ -57,7 +57,8 @@ private_subnet_tags = {
 }
 single_nat_gateway = true
 # EKS
-worker_nodes = [
+cluster_name = "freddieentity"
+node_groups = [
   {
     "node_group_name" : "spot",
     "capacity_type" : "SPOT",
@@ -65,9 +66,9 @@ worker_nodes = [
     "labels" : {
       type_of_nodegroup = "spot_untainted"
     },
-    "min_size": 1, 
-    "desired_size": 1, 
-    "max_size": 1
+    "min_size" : 1,
+    "desired_size" : 1,
+    "max_size" : 1
   },
   {
     "node_group_name" : "ondemand",
@@ -76,8 +77,8 @@ worker_nodes = [
     "labels" : {
       type_of_nodegroup = "on_demand_untainted"
     },
-    "min_size": 1, 
-    "desired_size": 1, 
-    "max_size": 1
+    "min_size" : 1,
+    "desired_size" : 1,
+    "max_size" : 1
   }
 ]

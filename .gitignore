@@ -2,13 +2,13 @@
 .idea
 terragrunt.iml
 vendor
-.terraform
-.infracost
+**/.terraform/*
+**/.terragrunt-cache/*
+**/.infracost/*
 .vscode
 *.tfstate
 *.tfstate.backup
 *.out
-.terragrunt-cache
 .bundle
 .ruby-version
 .terraform.lock.hcl
