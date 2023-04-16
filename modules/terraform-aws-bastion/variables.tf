@@ -18,5 +18,5 @@ variable "ec2_key_pair_name" {
 
 variable "ec2_instance_type" {
   description = "EC2 Instance type to launch"
-  default = "t2.micro"
+  default     = "t2.micro"
 }

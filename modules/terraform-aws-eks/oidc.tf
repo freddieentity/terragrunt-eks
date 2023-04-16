@@ -3,9 +3,9 @@
 # Get the EKS Cert
 data "tls_certificate" "eks" {
   url = aws_eks_cluster.main.identity[0].oidc[0].issuer
-} 
+}
 
-# OpenID Connect Provider
+# OIDC Provider to enable trust between AWS IAM and K8S Service Account
 resource "aws_iam_openid_connect_provider" "eks" {
   client_id_list  = ["sts.amazonaws.com"]
   thumbprint_list = [data.tls_certificate.eks.certificates[0].sha1_fingerprint]

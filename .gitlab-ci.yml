@@ -10,17 +10,20 @@ stages:
     - plan
     - .post
 
-init:
-  stage: init
-  script: |
-    terraform -version
-    terraform init
 
 validate:
   stage: validate
   script: |
-    terraform fmt -check
-    terraform validate
+    terragrunt hclfmt
+    terraform fmt --recursive
+
+init:
+  stage: init
+  script: |
+    cd /envs/dev # Replace to corresponding envs
+    terraform version
+    terragrunt version
+    terragrunt run-all init
 
 checkov:
   stage: scan
@@ -30,21 +33,19 @@ checkov:
 infracost:
   stage: scan
   script: |
-    infracost diff --path . --compare-to infracost-base.json
-    infracost breakdown --path . --format json --out-file infracost-base.json
-    # infracost upload --path infracost-base.json
+    infracost breakdown --path . 
 
 tflint:
   stage: scan
   script: |
-    echo "tflint"
+    tflint
 
 tfsec:
   stage: scan
   script: |
-    echo "tfsec"
+    tfsec
 
 terraform-plan:
   stage: plan
   script: |
-    terraform plan
+    terragrunt run-all plan

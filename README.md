@@ -1,22 +1,37 @@
-# Terragrunt
+# Infrastructure live repository
+This repo will be in charge of handling infrastructure provisioning for actual environments (dev, qa, staging, prod) which will be orchestrated by Terragrunt - a wrapper of Terraform.
+Each environment corresponds to each folder in the envs folder. In specific environment folder, it will have its own terragrunt.hcl to input module variables while extending parents terragrunt.hcl configurations.
 
-[![Maintained by Gruntwork.io](https://img.shields.io/badge/maintained%20by-gruntwork.io-%235849a6.svg)](https://gruntwork.io/?ref=repo_terragrunt)
-[![Go Report Card](https://goreportcard.com/badge/github.com/gruntwork-io/terragrunt)](https://goreportcard.com/report/github.com/gruntwork-io/terragrunt)
-[![GoDoc](https://godoc.org/github.com/gruntwork-io/terragrunt?status.svg)](https://godoc.org/github.com/gruntwork-io/terragrunt)
-![Terraform Version](https://img.shields.io/badge/tf-%3E%3D0.12.0-blue.svg)
+```sh
+.
+├── README.md
+├── envs # Contains environment infrastructure
+│   ├── common.hcl
+│   ├── dev
+│   │   ├── eks
+│   │   │   └── terragrunt.hcl
+│   │   └── vpc
+│   │       └── terragrunt.hcl
+│   ├── prod
+│   │   └── terragrunt.hcl
+│   ├── qa
+│   │   └── terragrunt.hcl
+│   └── staging
+│       └── terragrunt.hcl
+├── terragrunt.hcl # Root configuration including remote state, 
+```
+```sh
+# Instead of go over each module in each environment. We will run all using terragrunt run-all command
+terragrunt run-all init
+terragrunt run-all plan
+terragrunt run-all apply --terragrunt-non-interactive # echo "Y" | terragrunt apply-all
+terragrunt run-all destroy --terragrunt-non-interactive
+# During provision all infrastructure. If some modules corrupt then you could get into specific module folder to recreate it manually
+```
 
-Terragrunt is a thin wrapper for [Terraform](https://www.terraform.io/) that provides extra tools for keeping your
-Terraform configurations [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself),
-working with multiple Terraform modules, and managing remote state.
+TODO:
+- Validate PR (similar with module repo)
 
-Please see the following for more info, including install instructions and complete documentation:
+- Put comment of `terraform plan` to PR
 
-* [Terragrunt Website](https://terragrunt.gruntwork.io)
-* [Getting started with Terragrunt](https://terragrunt.gruntwork.io/docs/getting-started/quick-start/)
-* [Terragrunt Documentation](https://terragrunt.gruntwork.io/docs)
-* [Contributing to Terragrunt](https://terragrunt.gruntwork.io/docs/community/contributing)
-* [Commercial Support](https://gruntwork.io/support/)
-
-## License
-
-This code is released under the MIT License. See [LICENSE.txt](LICENSE.txt).
+- CD plan must have approval button to merge and then trigger `terraform apply`

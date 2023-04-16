@@ -15,7 +15,7 @@ init:
 validate:
   stage: validate
   script: |
-    terraform fmt -check
+    terraform fmt --recursive
     terraform validate
 
 checkov:

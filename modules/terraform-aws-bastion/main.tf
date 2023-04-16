@@ -10,11 +10,11 @@ terraform {
 }
 
 resource "aws_instance" "bastion" {
-  ami           = data.aws_ami.bastion_ami.id
-  instance_type = var.ec2_instance_type
+  ami             = data.aws_ami.bastion_ami.id
+  instance_type   = var.ec2_instance_type
   security_groups = var.security_group_ids
-  subnet_id = var.application_subnets[0]
-  key_name = var.ec2_key_pair_name
+  subnet_id       = var.application_subnets[0]
+  key_name        = var.ec2_key_pair_name
 
   tags = {
     Name = "Bastion"
