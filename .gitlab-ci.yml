@@ -4,8 +4,8 @@
 
 stages:
     - .pre
-    - init
     - validate
+    - init
     - scan
     - plan
     - .post
