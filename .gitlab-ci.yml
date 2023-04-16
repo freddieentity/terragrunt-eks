@@ -20,7 +20,7 @@ validate:
 init:
   stage: init
   script: |
-    cd /envs/dev # Replace to corresponding envs
+    cd ./envs/dev # Replace to corresponding envs
     terraform version
     terragrunt version
     terragrunt run-all init
