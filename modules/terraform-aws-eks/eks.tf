@@ -17,7 +17,7 @@ resource "aws_eks_node_group" "main" {
 
   cluster_name    = aws_eks_cluster.main.name
   node_group_name = each.value.node_group_name
-  node_role_arn   = aws_iam_role.eks_cluster.arn
+  node_role_arn   = aws_iam_role.eks_worker.arn
   instance_types  = each.value.instance_types
   subnet_ids      = var.private_subnet_ids
   capacity_type   = each.value.capacity_type
