@@ -19,7 +19,7 @@ dependency "vpc" {
     public_subnet_ids  = ["public-subnet-1234", "public-subnet-6789"]
     private_subnet_ids = ["private-subnet-1234", "private-subnet-6789"]
   }
-  mock_outputs_allowed_terraform_commands = ["init", "validate", "plan"]
+  mock_outputs_allowed_terraform_commands = ["init", "validate", "plan", "show"]
 }
 
 inputs = {
