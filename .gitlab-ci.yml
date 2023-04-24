@@ -20,6 +20,7 @@ before_script:
   - rm -rf .terraform
   - terraform version
   - terragrunt version
+  - cd $ROOT_DIR
   - terragrunt run-all init
 
 validate:
@@ -89,6 +90,8 @@ infracost:
 #     tfsec
 
 apply:
+  only:
+  - main
   stage: apply
   when: manual
   allow_failure: false
