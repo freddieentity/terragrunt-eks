@@ -35,7 +35,6 @@ plan:
   dependencies:
     - validate
   script: 
-    - cd $ROOT_DIR
     - terragrunt run-all plan -out=plan
     - terragrunt run-all show plan > $TFPLAN_FILE
     - |
@@ -97,5 +96,4 @@ apply:
   when: manual
   allow_failure: false
   script: |
-    cd $ROOT_DIR
-    terragrunt run-all apply --terragrunt-non-interactive 
+    terragrunt run-all apply --terragrunt-non-interactive
