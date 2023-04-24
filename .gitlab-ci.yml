@@ -6,6 +6,8 @@ stages:
     - validate
     - plan
     - scan
+    - apply
+    - destroy
 
 variables:
   ROOT_DIR: ./envs/dev
@@ -85,3 +87,10 @@ infracost:
 #   stage: scan
 #   script: |
 #     tfsec
+
+apply:
+  stage: apply
+  when: manual
+  allow_failure: false
+  script: |
+    terragrunt run-all apply --terragrunt-non-interactive 
