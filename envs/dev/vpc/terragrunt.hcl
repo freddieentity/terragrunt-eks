@@ -57,12 +57,12 @@ inputs = {
     }
   ]
   public_subnet_tags = {
-    "kubernetes.io/role/elb"                    = "1"
-    "kubernetes.io/cluster/my-eks-cluster-name" = "owned"
+    "kubernetes.io/role/elb"                                        = "1"
+    "kubernetes.io/cluster/${local.common.locals.eks_cluster_name}" = "owned"
   }
   private_subnet_tags = {
-    "kubernetes.io/role/internal-elb"           = "1"
-    "kubernetes.io/cluster/my-eks-cluster-name" = "owned"
+    "kubernetes.io/role/internal-elb"                               = "1"
+    "kubernetes.io/cluster/${local.common.locals.eks_cluster_name}" = "owned"
   }
   single_nat_gateway = true
 }

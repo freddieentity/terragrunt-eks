@@ -1,10 +1,10 @@
 variable "eks_name" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "openid_provider_arn" {
-  type = string
+  type    = string
   default = ""
 }
 

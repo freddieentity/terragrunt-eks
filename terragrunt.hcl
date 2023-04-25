@@ -23,10 +23,14 @@ provider "aws" {
   region = "us-east-1"
   default_tags {
     tags = {
-    //   Environment = var.environment
+      CreatedBy      = "Terraform"
+      OrchestratedBy = "Terragrunt"
       ProjectID   = "pj001"
       Application = "mock"
       CostCenter  = "cc101"
+      CostPool = ""
+      BusinessUnit = ""
+      SystemTierClassification = ""
     }
   }
 //   region = var.aws_region

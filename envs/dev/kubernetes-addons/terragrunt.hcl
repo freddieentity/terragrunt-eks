@@ -10,10 +10,10 @@ terraform {
 locals {
   common = read_terragrunt_config(find_in_parent_folders("common.hcl"))
 
-  ingress-nginx-values = [ file("./values/ingress-nginx-values.yaml") ]
-  cert-manager-values = [ file("./values/cert-manager-values.yaml") ]
-  argocd-values = [ file("./values/argocd-values.yaml") ]
-  flux2-values = [ file("./values/flux2-values.yaml") ]
+  ingress-nginx-values = [file("./values/ingress-nginx-values.yaml")]
+  cert-manager-values  = [file("./values/cert-manager-values.yaml")]
+  argocd-values        = [file("./values/argocd-values.yaml")]
+  flux2-values         = [file("./values/flux2-values.yaml")]
 }
 
 dependency "eks" {
@@ -57,8 +57,8 @@ EOF
 }
 
 inputs = {
-    eks_name = dependency.eks.outputs.eks_name
-    openid_provider_arn = dependency.eks.outputs.openid_provider_arn
+  eks_name            = dependency.eks.outputs.eks_name
+  openid_provider_arn = dependency.eks.outputs.openid_provider_arn
   helm_releases = {
     ingress-nginx = {
       name       = "ingress-nginx"
