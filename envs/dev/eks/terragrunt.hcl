@@ -26,7 +26,7 @@ inputs = {
   cluster_name       = "freddieentity"
   public_subnet_ids  = dependency.vpc.outputs.public_subnet_ids
   private_subnet_ids = dependency.vpc.outputs.private_subnet_ids
-  node_groups = [
+  node_groups = [ # https://github.com/aws/amazon-vpc-cni-k8s/blob/master/misc/eni-max-pods.txt
     {
       "node_group_name" : "spot",
       "capacity_type" : "SPOT",
