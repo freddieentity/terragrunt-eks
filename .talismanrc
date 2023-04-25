@@ -1,0 +1,4 @@
+fileignoreconfig:
+- filename: envs/dev/kubernetes-addons/values/argocd-values.yaml
+  checksum: fd1243c5eda495aa30e15ec6619f5be2ff142686efbb504ddd954af70d1b1495
+version: ""
