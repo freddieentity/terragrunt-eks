@@ -68,15 +68,15 @@ inputs = {
         // "${file("/values/ingress-nginx-values.yaml")}"
       ]
     },
-    cert-manager = {
-      name       = "cert-manager"
-      repository = "https://charts.jetstack.io"
-      chart      = "cert-manager"
-      version    = "1.6.0"
+    argocd = {
+      name       = "argocd"
+      repository = "https://argoproj.github.io/argo-helm"
+      chart      = "argo-cd"
+      version    = "5.16.0"
       wait       = false
       timeout    = "1200"
 
-      namespace        = "cert-manager"
+      namespace        = "argocd"
       create_namespace = true
 
       values = [
@@ -84,5 +84,21 @@ inputs = {
       ]
       #   override_values = {}
     }
+    // cert-manager = {
+    //   name       = "cert-manager"
+    //   repository = "https://charts.jetstack.io"
+    //   chart      = "cert-manager"
+    //   version    = "1.6.0"
+    //   wait       = false
+    //   timeout    = "1200"
+
+    //   namespace        = "cert-manager"
+    //   create_namespace = true
+
+    //   values = [
+    //     // "${file("/values/cert-manager-values.yaml")}"
+    //   ]
+    //   #   override_values = {}
+    // }
   }
 }
