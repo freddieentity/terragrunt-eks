@@ -1,0 +1,2 @@
+export GITLAB_TOKEN=<gitlab_token>
+flux bootstrap gitlab --hostname=source.fsdhp.com --owner=ghc-devops --repository=terragrunt-infrastructure-live-repo --branch=tinnt26 --path=./examples/fluxcd --token-auth --personal
