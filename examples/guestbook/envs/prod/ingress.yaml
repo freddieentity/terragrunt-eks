@@ -6,7 +6,7 @@ metadata:
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-  - host: frontend.127.0.0.1.nip.io
+  - host: freddieentity.link
     http:
       paths:
       - pathType: Prefix

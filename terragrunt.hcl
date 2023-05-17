@@ -7,7 +7,8 @@ remote_state {
   }
   config = {
     // path = "${path_relative_to_include()}/terraform.tfstate"
-    bucket = "freddieentity-remote-state"
+    // bucket = "freddieentity-remote-state"
+    bucket = "coe-iac-remote-state"
     key    = "${path_relative_to_include()}/terraform.tfstate"
     region = "us-east-1"
     // encrypt        = true
@@ -23,18 +24,22 @@ provider "aws" {
   region = "us-east-1"
   default_tags {
     tags = {
-      CreatedBy      = "Terraform"
-      OrchestratedBy = "Terragrunt"
-      ProjectID   = "pj001"
-      Application = "mock"
-      CostCenter  = "cc101"
-      CostPool = ""
-      BusinessUnit = ""
-      SystemTierClassification = ""
+      ApplicationName = "IaC"
+      Creator         = "TinNT26"
+      OwnerService    = "CuongNV61"
+      ProjectID       = "GHSPOC2019"
+      // CreatedBy      = "Terraform"
+      // OrchestratedBy = "Terragrunt"
+      // ProjectID   = "pj001"
+      // Application = "mock"
+      // CostCenter  = "cc101"
+      // CostPool = ""
+      // BusinessUnit = ""
+      // SystemTierClassification = ""
     }
   }
 //   region = var.aws_region
-//   profile = var.aws_profile
+  // profile = "tinnt26"
 
 //   assume_role {
 //     session_name = "terragrunt"
