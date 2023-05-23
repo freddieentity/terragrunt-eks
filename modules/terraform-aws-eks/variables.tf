@@ -17,13 +17,3 @@ variable "node_groups" {
   type        = list(any)
   description = "List of worker node groups"
 }
-
-variable "eks_cluster_iam_role_arn" {
-  description = "IAM role attached to the EKS cluster"
-  type        = string
-}
-
-variable "eks_node_group_iam_role_arn" {
-  description = "IAM role attached to the EKS node group"
-  type        = string
-}

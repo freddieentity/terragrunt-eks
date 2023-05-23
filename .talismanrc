@@ -1,0 +1,6 @@
+fileignoreconfig:
+- filename: envs/dev/kubernetes-addons/values/argocd-values.yaml
+  checksum: fd1243c5eda495aa30e15ec6619f5be2ff142686efbb504ddd954af70d1b1495
+- filename: envs/dev/kubernetes-addons/values/ingress-nginx-values.yaml
+  checksum: fc29403cbfc9321a358fe42f7480ea76f0b6e6fd5ab7f4fd00e2ce5dd1a98a29
+version: ""
