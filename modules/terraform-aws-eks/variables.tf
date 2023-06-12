@@ -13,7 +13,15 @@ variable "private_subnet_ids" {
   description = "Private Subnets"
 }
 variable "node_groups" {
-  default     = []
-  type        = list(any)
-  description = "List of worker node groups"
+  default     = {}
+  type        = map(any)
+  description = "List of node groups which defines a set of workers"
+}
+variable "eks_node_group_role_arn" {
+  default = ""
+  type = string
+}
+variable "eks_cluster_role_arn" {
+  default = ""
+  type = string
 }

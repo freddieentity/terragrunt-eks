@@ -1,23 +1,33 @@
 resource "aws_eks_cluster" "main" {
   name     = var.cluster_name
-  role_arn = aws_iam_role.eks_cluster.arn
+  role_arn = var.eks_cluster_role_arn
 
   vpc_config {
     endpoint_private_access = false # Enable when having a VPN
     endpoint_public_access  = true
     subnet_ids              = var.private_subnet_ids # EKS creates ENI across these subnets to enable communication between EKS workers and EKS controlplane
   }
-  depends_on = [
-    aws_iam_role_policy_attachment.eks_cluster,
-  ]
+
+  # Config network for service ip assignment
+  # kubernetes_network_config {
+  #   service_ipv4_cidr = var.cluster_service_ipv4_cidr
+  # }
+
+  # Enable EKS Cluster Control Plane Logging
+  enabled_cluster_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
+
+  # depends_on = [
+  #   aws_iam_role_policy_attachment.eks_cluster,
+  #   aws_cloudwatch_log_group.main
+  # ]
 }
 
 resource "aws_eks_node_group" "main" {
-  for_each = { for index, value in var.node_groups : value.node_group_name => value }
+  for_each = var.node_groups
 
   cluster_name    = aws_eks_cluster.main.name
-  node_group_name = each.value.node_group_name
-  node_role_arn   = aws_iam_role.eks_worker.arn
+  node_group_name = each.key
+  node_role_arn   = var.eks_node_group_role_arn
   instance_types  = each.value.instance_types
   subnet_ids      = var.private_subnet_ids
   capacity_type   = each.value.capacity_type
@@ -34,7 +44,7 @@ resource "aws_eks_node_group" "main" {
     max_unavailable = 1
   }
 
-  depends_on = [
-    aws_iam_role_policy_attachment.eks_worker
-  ]
+  # depends_on = [
+  #   aws_iam_role_policy_attachment.eks_worker
+  # ]
 }

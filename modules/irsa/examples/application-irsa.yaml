@@ -2,10 +2,10 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: application
+  name: irsa-freddieentity-application
   namespace: default
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::158904540988:role/application-irsa
+    eks.amazonaws.com/role-arn: arn:aws:iam::158904540988:role/irsa-freddieentity-application
 ---
 apiVersion: v1
 kind: Pod
@@ -13,7 +13,7 @@ metadata:
   name: aws-cli
   namespace: default
 spec:
-  serviceAccountName: application
+  serviceAccountName: irsa-freddieentity-application
   containers:
   - name: aws-cli
     image: amazon/aws-cli

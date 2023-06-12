@@ -12,3 +12,7 @@ https://aws.amazon.com/blogs/containers/diving-into-iam-roles-for-service-accoun
 - 5. *-irsa.tf create fine-grained application IRSA roles based on OIDC provider
 - 6. variables.tf module variables
 - 7. outputs.tf module outputs
+
+
+# EKS
+EKS will create ENI across subnets for worker nodes within subnets can connect to EKS privately

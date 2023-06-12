@@ -4,11 +4,11 @@ metadata:
   name: guestbook-frontend
   annotations:
     # kubernetes.io/ingress.class: nginx
-    cert-manager.io/cluster-issuer: letsencrypt-prod # cert-manager issuer must be installed first
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   ingressClassName: nginx
   rules:
-  - host: guestbook.freddieentity.link
+  - host: dev.guestbook.freddieentity.link
     http:
       paths:
       - pathType: Prefix
@@ -20,5 +20,5 @@ spec:
               number: 80
   tls:
     - hosts:
-      - guestbook.freddieentity.link
-      secretName: tinnt26-guestbook-tls
+      - dev.guestbook.freddieentity.link
+      secretName: tinnt26-guestbook-tls-dev

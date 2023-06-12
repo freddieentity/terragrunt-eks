@@ -6,8 +6,7 @@ remote_state {
     if_exists = "overwrite_terragrunt"
   }
   config = {
-    // path = "${path_relative_to_include()}/terraform.tfstate"
-    bucket = "freddieentity-remote-state"
+    bucket = "freddieentity-remote-state" # "coe-iac-remote-state" 
     key    = "${path_relative_to_include()}/terraform.tfstate"
     region = "us-east-1"
     // encrypt        = true
@@ -25,12 +24,16 @@ provider "aws" {
     tags = {
       CreatedBy      = "Terraform"
       OrchestratedBy = "Terragrunt"
-      ProjectID   = "pj001"
-      Application = "mock"
-      CostCenter  = "cc101"
+      ProjectID   = "PJ001"
+      Application = "Spoke"
+      CostCenter  = "CC102"
       CostPool = ""
       BusinessUnit = ""
       SystemTierClassification = ""
+      // ProjectID = "GHSPOC2019"
+      // ApplicationName = "IaC"
+      // OwnerService = "CuongNV61"
+      // Creator = "Creator"
     }
   }
 //   region = var.aws_region

@@ -1,6 +1,6 @@
 # Master Node
 resource "aws_iam_role" "eks_cluster" {
-  name               = "${var.cluster_name}-eks-cluster" # This role will allow this EKS to call AssumeRole API to get STS
+  name               = "${var.eks_cluster_name}-eks-cluster" # This role will allow this EKS to call AssumeRole API to get STS
   assume_role_policy = <<POLICY
 {
  "Version": "2012-10-17",
@@ -25,7 +25,7 @@ resource "aws_iam_role_policy_attachment" "eks_cluster" {
 
 # Node Groups
 resource "aws_iam_role" "eks_worker" {
-  name               = "${var.cluster_name}-eks-worker" # This role will allow EKS workers (basically EC2) to call AssumeRole API to get STS
+  name               = "${var.eks_cluster_name}-eks-worker" # This role will allow EKS workers (basically EC2) to call AssumeRole API to get STS
   assume_role_policy = <<POLICY
 {
  "Version": "2012-10-17",
