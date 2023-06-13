@@ -47,6 +47,6 @@ resource "aws_iam_role_policy_attachment" "clusterautoscaler" {
   policy_arn = aws_iam_policy.clusterautoscaler.arn
 }
 
-output "clusterautoscaler_irsa_arn" {
+output "irsa_clusterautoscaler_policy_arn" {
   value = aws_iam_role.clusterautoscaler.arn
 }

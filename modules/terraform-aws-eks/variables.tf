@@ -1,6 +1,14 @@
 variable "cluster_name" {
   default     = "freddieentity"
-  description = "EKS Lab cluster"
+  description = "EKS cluster"
+}
+variable "cluster_version" {
+  default     = "1.26"
+  description = "EKS cluster version"
+}
+variable "cluster_service_ipv4_cidr" {
+  default = "172.20.0.0/16"
+  type    = string
 }
 variable "public_subnet_ids" {
   default     = []
@@ -19,9 +27,9 @@ variable "node_groups" {
 }
 variable "eks_node_group_role_arn" {
   default = ""
-  type = string
+  type    = string
 }
 variable "eks_cluster_role_arn" {
   default = ""
-  type = string
+  type    = string
 }

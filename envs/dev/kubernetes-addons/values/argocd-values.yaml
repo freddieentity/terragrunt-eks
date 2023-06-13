@@ -17,15 +17,15 @@ server:
     #   - secretName: argocd-tls-certificate
     #     hosts:
     #       - *host
-  metrics: &metrics
-    enabled: true
-    serviceMonitor:
-      enabled: true
-dex:
-  enabled: true
-controller:
-  metrics: *metrics
-repoServer:
-  metrics: *metrics
-redis:
-  metrics: *metrics
+#   metrics: &metrics
+#     enabled: true
+#     serviceMonitor:
+#       enabled: true
+# dex:
+#   enabled: true
+# controller:
+#   metrics: *metrics
+# repoServer:
+#   metrics: *metrics
+# redis:
+#   metrics: *metrics

@@ -19,17 +19,17 @@ generate "provider" {
   if_exists = "overwrite_terragrunt"
   contents  = <<EOF
 provider "aws" {
-  region = "us-east-1"
+  region = "ap-southeast-1"
   default_tags {
     tags = {
       CreatedBy      = "Terraform"
       OrchestratedBy = "Terragrunt"
-      ProjectID   = "PJ001"
-      Application = "Spoke"
-      CostCenter  = "CC102"
-      CostPool = ""
-      BusinessUnit = ""
-      SystemTierClassification = ""
+      // ProjectID   = "PJ001"
+      // Application = "Spoke"
+      // CostCenter  = "CC102"
+      // CostPool = ""
+      // BusinessUnit = ""
+      // SystemTierClassification = ""
       // ProjectID = "GHSPOC2019"
       // ApplicationName = "IaC"
       // OwnerService = "CuongNV61"

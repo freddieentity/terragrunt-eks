@@ -24,8 +24,9 @@ inputs = {
 
   enable_dns_hostnames = true
   enable_dns_support   = true
-  enable_nat_gateway = true
-  single_nat_gateway = true
+  enable_nat_gateway   = true
+  single_nat_gateway   = true
+  map_public_ip_on_launch = true
 
   // cidr = "10.0.0.0/16"
   // name = "my-eks-vpc"

@@ -1,18 +1,17 @@
-variable "region" {
-  default     = "us-east-1"
-  description = "AWS Region"
+variable "vpc_id" {
+  default = ""
 }
 
-variable "application_subnets" {
-  default = []
+variable "public_subnet_id" {
+  default = ""
 }
 
 variable "security_group_ids" {
   default = []
 }
 
-variable "ec2_key_pair_name" {
-  default     = "docker"
+variable "ec2_public_key_name" {
+  default     = "terragrunt-eks"
   description = "Key pair for connecting to launched EC2 instances"
 }
 

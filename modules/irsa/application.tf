@@ -1,5 +1,4 @@
 # IAM roles will leverage on OIDC to manage SA permissions
-
 data "aws_iam_policy_document" "irsa" {
   statement {
     actions = ["sts:AssumeRoleWithWebIdentity"]
@@ -8,7 +7,7 @@ data "aws_iam_policy_document" "irsa" {
     condition {
       test     = "StringEquals"
       variable = "${replace(var.eks_oidc_provider_url, "https://", "")}:sub"
-      values   = ["system:serviceaccount:default:application"] # Pod's SA mapped to IAM role. This SA will call AssumeRoleWithWebIdentity API to get STS
+      values   = ["system:serviceaccount:default:${local.prefix}-application"] 
     }
 
     principals {
@@ -44,7 +43,7 @@ resource "aws_iam_role_policy_attachment" "irsa" {
   policy_arn = aws_iam_policy.irsa.arn
 }
 
-output "test_policy_irsa_arn" {
+output "irsa_application_policy_arn" {
   value = aws_iam_role.irsa.arn
 }
 
@@ -59,28 +58,18 @@ resource "kubernetes_service_account_v1" "irsa" {
   }
 } # Create pod using this SA to test aws cli API calls
 
-# Resource: Kubernetes Job # For testing IRSA
-resource "kubernetes_job_v1" "irsa" {
+# Resource: Kubernetes Pod # For testing IRSA
+resource "kubernetes_pod_v1" "irsa" {
   metadata {
     name = "${local.prefix}-application"
   }
   spec {
-    template {
-      metadata {
-        labels = {
-          app = "${local.prefix}-application"
-        }
-      }
-      spec {
-        service_account_name = kubernetes_service_account_v1.irsa.metadata.0.name
-        container {
-          name    = "${local.prefix}-application"
-          image   = "amazon/aws-cli:latest"
-          command = ["/bin/bash", "-c", "--"]
-          args    = ["while true; do sleep 30; done;"]
-        }
-        restart_policy = "Never"
-      }
+    service_account_name = kubernetes_service_account_v1.irsa.metadata.0.name
+    container {
+      name    = "${local.prefix}-application"
+      image   = "amazon/aws-cli:latest"
+      command = ["/bin/bash", "-c", "--"]
+      args    = ["while true; do sleep 30; done;"]
     }
   }
 }
