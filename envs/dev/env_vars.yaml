@@ -1,0 +1,15 @@
+environment: dev
+application_name: fredeks
+modules:
+  base:
+    skip: false
+  vpc:
+    skip: false
+  bastion:
+    skip: true
+  eks:
+    skip: false
+  irsa:
+    skip: true
+  kubernetes-addons:
+    skip: true

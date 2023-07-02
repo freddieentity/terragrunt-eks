@@ -6,11 +6,13 @@ terraform {
   source = "../../../modules/base"
 }
 
-# Acess this using syntax local.common.locals.tags
 locals {
-  common = read_terragrunt_config(find_in_parent_folders("common.hcl"))
+  // inputs   = yamldecode(file("inputs.yaml"))
+  env_vars = yamldecode(file(find_in_parent_folders("env_vars.yaml")))
 }
 
+skip = local.env_vars.modules.base.skip
+
 inputs = {
-  eks_cluster_name = local.common.locals.eks_cluster_name
+  eks_cluster_name = local.env_vars.application_name
 }

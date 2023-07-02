@@ -1,0 +1,1 @@
+https://blog.devops.dev/gitops-multi-tenancy-with-argo-cd-74ce8ec3bbf5

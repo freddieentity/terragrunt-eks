@@ -1,0 +1,11 @@
+region: us-east-1
+profile: default
+assume_role_session_name: "terragrunt"
+assume_role_arn: "arn:aws:iam::158904540988:role/terraform"
+backend:
+  bucket: freddieentity-remote-state
+  encrypt: true
+  dynamodb_table: freddieentity-remote-state-lock-table
+providers:
+  aws:
+    version: 3.27.0

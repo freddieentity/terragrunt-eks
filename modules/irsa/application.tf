@@ -7,7 +7,7 @@ data "aws_iam_policy_document" "irsa" {
     condition {
       test     = "StringEquals"
       variable = "${replace(var.eks_oidc_provider_url, "https://", "")}:sub"
-      values   = ["system:serviceaccount:default:${local.prefix}-application"] 
+      values   = ["system:serviceaccount:default:${local.prefix}-application"]
     }
 
     principals {

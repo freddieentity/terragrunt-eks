@@ -7,7 +7,7 @@ data "aws_iam_policy_document" "irsa_cert_manager" {
     condition {
       test     = "StringEquals"
       variable = "${replace(var.eks_oidc_provider_url, "https://", "")}:sub"
-      values   = ["system:serviceaccount:cert-manager:${local.prefix}-cert-manager"] 
+      values   = ["system:serviceaccount:cert-manager:${local.prefix}-cert-manager"]
     }
 
     principals {

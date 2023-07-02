@@ -1,16 +1,16 @@
 remote_state {
-  //   backend = "local"
-  backend = "s3"
+  backend = "local"
+  // backend = "s3"
   generate = {
     path      = "backend.tf"
     if_exists = "overwrite_terragrunt"
   }
   config = {
-    bucket = "freddieentity-remote-state" # "coe-iac-remote-state" 
-    key    = "${path_relative_to_include()}/terraform.tfstate"
-    region = "us-east-1"
-    // encrypt        = true
-    // dynamodb_table = "freddieentity-remote-state-lock-table"
+    // bucket =  "freddieentity-remote-state" # "coe-iac-remote-state"
+    // key    = "${path_relative_to_include()}/terraform.tfstate"
+    // region = "us-east-1"
+    // // encrypt        = true
+    // // dynamodb_table = "freddieentity-remote-state-lock-table"
   }
 }
 
@@ -19,7 +19,7 @@ generate "provider" {
   if_exists = "overwrite_terragrunt"
   contents  = <<EOF
 provider "aws" {
-  region = "ap-southeast-1"
+  region = "us-east-1"
   default_tags {
     tags = {
       CreatedBy      = "Terraform"
@@ -30,14 +30,12 @@ provider "aws" {
       // CostPool = ""
       // BusinessUnit = ""
       // SystemTierClassification = ""
-      // ProjectID = "GHSPOC2019"
-      // ApplicationName = "IaC"
-      // OwnerService = "CuongNV61"
-      // Creator = "Creator"
+      ServiceOwner = "TinNT26"
+      Creator = "TinNT26"
+      ProjectID = "GHSPOC2019"
+      Application = "IaC"
     }
   }
-//   region = var.aws_region
-//   profile = var.aws_profile
 
 //   assume_role {
 //     session_name = "terragrunt"
@@ -45,4 +43,8 @@ provider "aws" {
 //   }
 }
 EOF
+}
+
+locals {
+  vars = yamldecode(file("common.yaml"))
 }

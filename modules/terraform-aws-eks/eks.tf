@@ -30,6 +30,7 @@ resource "aws_eks_node_group" "main" {
   node_group_name = each.key
   node_role_arn   = var.eks_node_group_role_arn
   instance_types  = each.value.instance_types
+  ami_type        = each.value.ami_type
   subnet_ids      = each.value.is_private ? var.private_subnet_ids : var.public_subnet_ids
   capacity_type   = each.value.capacity_type
 
@@ -56,5 +57,26 @@ resource "aws_eks_node_group" "main" {
 
   tags = {
     Name = each.key
+  }
+}
+
+resource "aws_eks_fargate_profile" "main" {
+  for_each = var.fargate_profiles
+
+  cluster_name           = aws_eks_cluster.main.name
+  fargate_profile_name   = each.key
+  pod_execution_role_arn = var.eks_fargate_profile_role_arn
+
+  # These subnets must have the following resource tag: 
+  # kubernetes.io/cluster/<CLUSTER_NAME>.
+  subnet_ids = var.private_subnet_ids # Pods run on Fargate must be in private subnets
+
+  dynamic "selector" {
+    for_each = each.value.selectors
+
+    content {
+      namespace = selector.value.namespace
+      labels    = lookup(selector.value, "labels", {})
+    }
   }
 }

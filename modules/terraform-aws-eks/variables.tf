@@ -25,11 +25,20 @@ variable "node_groups" {
   type        = map(any)
   description = "List of node groups which defines a set of workers"
 }
+variable "fargate_profiles" {
+  default     = {}
+  type        = map(any)
+  description = "List of fargate profiles which defines a set of serverless workers"
+}
 variable "eks_node_group_role_arn" {
   default = ""
   type    = string
 }
 variable "eks_cluster_role_arn" {
+  default = ""
+  type    = string
+}
+variable "eks_fargate_profile_role_arn" {
   default = ""
   type    = string
 }
